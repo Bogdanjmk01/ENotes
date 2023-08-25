@@ -15,7 +15,17 @@
                     <div class="card-body p-md-5">
                         <div class="row justify-content-center">
                             <div class="col-md-10 col-lg-4 col-xl-5 order-2 order-lg-1">
-
+                                <%
+                                    String regMessage = (String) session.getAttribute("reg-success");
+                                    if (regMessage != null) {
+                                        {%>
+                                            <div class="alert alert-success w-100" role="alert"><%=regMessage%></div>
+                                        <%}
+                                        <%
+                                            session.removeAttribute("reg-success");
+                                        %>
+                                    }
+                                %>
                                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4"><b>Login</b></p>
 
                                 <form class="mx-1 mx-md-4">
@@ -35,10 +45,7 @@
                                     </div>
 
                                     <div class="form-check d-flex justify-content-center mb-5">
-                                        <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
-                                        <label class="form-check-label" for="form2Example3c">
-                                            I agree all statements in <a href="#">Terms of service</a>
-                                        </label>
+                                        <p style="color: #1480aa">Don't have an account? <a href="register.jsp"><b> Click here to register</b></a></p>
                                     </div>
 
                                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
