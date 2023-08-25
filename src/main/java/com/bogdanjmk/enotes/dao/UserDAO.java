@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 @RequiredArgsConstructor
 public class UserDAO {
@@ -34,5 +35,29 @@ public class UserDAO {
         }
 
         return isUserInserted;
+    }
+
+    public boolean loginUser(UserDetails userDetails) {
+        boolean loginUser = false;
+
+        try {
+            String query = """
+                        SELECT * FROM users WHERE email = ? AND password = ?;
+                    """;
+
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, userDetails.getEmail());
+            ps.setString(2, userDetails.getPassword());
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                loginUser = true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return loginUser;
     }
 }

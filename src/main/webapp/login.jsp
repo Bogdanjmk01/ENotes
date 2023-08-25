@@ -18,29 +18,35 @@
                                 <%
                                     String regMessage = (String) session.getAttribute("reg-success");
                                     if (regMessage != null) {
-                                        {%>
-                                            <div class="alert alert-success w-100" role="alert"><%=regMessage%></div>
-                                        <%}
-                                        <%
-                                            session.removeAttribute("reg-success");
-                                        %>
-                                    }
                                 %>
+                                <div class="alert alert-success w-100" role="alert"><%=regMessage%></div>
+                                <%
+                                        session.removeAttribute("reg-success");
+                                    } %>
+
+                                <%
+                                    String failMessage = (String) session.getAttribute("failed-message");
+                                    if (failMessage != null) {
+                                %>
+                                <div class="alert alert-danger w-100" role="alert"><%=failMessage%></div>
+                                <%
+                                    session.removeAttribute("failed-message");
+                                    } %>
                                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4"><b>Login</b></p>
 
-                                <form class="mx-1 mx-md-4">
+                                <form class="mx-1 mx-md-4" action="LoginServlet" method="post">
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="email" id="form3Example3c" class="form-control" placeholder="Enter your email" />
+                                            <input type="email" id="form3Example3c" class="form-control" placeholder="Enter your email" name="email" />
                                         </div>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="password" id="form3Example4c" class="form-control" placeholder="Enter your password" />
+                                            <input type="password" id="form3Example4c" class="form-control" placeholder="Enter your password" name="password" />
                                         </div>
                                     </div>
 
@@ -49,7 +55,7 @@
                                     </div>
 
                                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                        <button type="button" class="btn btn-outline-dark btn-lg">Login</button>
+                                        <button type="submit" class="btn btn-outline-dark btn-lg">Login</button>
                                     </div>
 
                                 </form>
@@ -57,8 +63,7 @@
                             </div>
                             <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
-                                     class="img-fluid" alt="Sample image">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp" class="img-fluid" alt="Sample image">
 
                             </div>
                         </div>
