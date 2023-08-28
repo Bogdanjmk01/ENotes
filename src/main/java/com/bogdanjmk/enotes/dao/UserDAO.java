@@ -31,37 +31,35 @@ public class UserDAO {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
 
         return isUserInserted;
     }
 
-    public UserDetails loginUser(UserDetails userDetails) {
+    public UserDetails getUserByEmail(String email) {
         UserDetails user = null;
 
         try {
             String query = """
-                        SELECT * FROM users WHERE email = ? AND password = ?;
+                    SELECT * FROM users WHERE email = ?;
                     """;
 
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setString(1, userDetails.getEmail());
-            ps.setString(2, userDetails.getPassword());
+            ps.setString(1, email);
+
             ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
+            while(rs.next()) {
                 user = new UserDetails();
                 user.setId(rs.getLong("id"));
-                user.setName(rs.getString("name"));
                 user.setEmail(rs.getString("email"));
+                user.setName(rs.getString("name"));
                 user.setPassword(rs.getString("password"));
             }
-
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
-
         return user;
     }
 }

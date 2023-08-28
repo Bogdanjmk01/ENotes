@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 
@@ -20,10 +22,12 @@ public class UserServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+
         UserDetails userDetails = new UserDetails();
         userDetails.setName(name);
         userDetails.setEmail(email);
-        userDetails.setPassword(password);
+        userDetails.setPassword(hashedPassword);
 
         UserDAO dao = new UserDAO(DBConnection.getConnection());
         boolean isUserInserted = dao.addUser(userDetails);

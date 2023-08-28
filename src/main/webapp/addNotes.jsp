@@ -30,7 +30,7 @@
                         <%
                             UserDetails loggedInUser = (UserDetails) session.getAttribute("userDetails");
 
-                            if (user != null) {
+                            if (loggedInUser != null) {
                         %>
                         <input type="hidden" value="<%=loggedInUser.getId()%>" name="userId">
                         <%
