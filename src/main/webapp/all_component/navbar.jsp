@@ -27,7 +27,7 @@
                     <a class="nav-link" href="addNotes.jsp"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Notes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa-solid fa-address-book"></i> Show Notes</a>
+                    <a class="nav-link" href="showNotes.jsp"><i class="fa-solid fa-address-book"></i> Show Notes</a>
                 </li>
             </ul>
             <div class="d-flex gap-2" role="search">

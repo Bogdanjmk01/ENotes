@@ -1,11 +1,13 @@
 package com.bogdanjmk.enotes.dao;
 
 import com.bogdanjmk.enotes.user.Note;
-import com.bogdanjmk.enotes.user.UserDetails;
 import lombok.RequiredArgsConstructor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 public class NoteDAO {
@@ -35,5 +37,35 @@ public class NoteDAO {
         }
 
         return f;
+    }
+
+    public List<Note> getNote(Long id) {
+        List<Note> notes = new ArrayList<>();
+        Note note;
+
+        try {
+            String query = """
+                    SELECT * FROM notes WHERE user_id = ? ORDER BY id DESC;
+                    """;
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setLong(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                note = new Note();
+                note.setId(rs.getLong(1));
+                note.setTitle(rs.getString(2));
+                note.setContent(rs.getString(3));
+                note.setDate(rs.getTimestamp(4));
+                note.setUserId(rs.getLong(5));
+
+                notes.add(note);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return notes;
     }
 }
