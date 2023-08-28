@@ -7,6 +7,7 @@ import java.beans.Transient;
 @Data
 @NoArgsConstructor
 public class UserDetails {
+    private Long id;
     private String name;
     private String email;
     private String password;

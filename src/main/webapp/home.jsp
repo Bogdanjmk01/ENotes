@@ -1,4 +1,12 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%
+    UserDetails userLoggedInForHomePage = (UserDetails) session.getAttribute("userDetails");
+
+    if (userLoggedInForHomePage == null) {
+        response.sendRedirect("login.jsp");
+        session.setAttribute("login-error", "You have to login first to be able to access this page!");
+    }
+%>
 <html>
 <head>
     <title>Title</title>
@@ -12,7 +20,7 @@
             <div class="card-body text-center">
                 <img src="img/taking_notes.jpg" alt="" class="img-fluid mx-auto" style="max-width: 80%;">
                 <h1>Start Taking Your Notes</h1>
-                <a href="" class="btn btn-outline-dark btn-lg">Start Here</a>
+                <a href="addNotes.jsp" class="btn btn-outline-dark btn-lg">Start Here</a>
             </div>
         </div>
     </div>

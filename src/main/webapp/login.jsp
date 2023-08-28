@@ -32,6 +32,24 @@
                                 <%
                                     session.removeAttribute("failed-message");
                                     } %>
+
+                                <%
+                                    String loginErrorMessage = (String) session.getAttribute("login-error");
+                                    if (loginErrorMessage != null) {
+                                %>
+                                <div class="alert alert-danger w-100" role="alert"><%=loginErrorMessage%></div>
+                                <%
+                                        session.removeAttribute("login-error");
+                                    } %>
+
+                                <%
+                                    String logoutMessage = (String) session.getAttribute("logoutMessage");
+                                    if (logoutMessage != null) {
+                                %>
+                                <div class="alert alert-warning w-100" role="alert"><%=logoutMessage%></div>
+                                <%
+                                        session.removeAttribute("login-error");
+                                    } %>
                                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4"><b>Login</b></p>
 
                                 <form class="mx-1 mx-md-4" action="LoginServlet" method="post">
