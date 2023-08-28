@@ -37,6 +37,29 @@ public class UserDAO {
         return isUserInserted;
     }
 
+    public boolean doesUserAlreadyExists(String email) {
+        try {
+            String query = """
+                    SELECT COUNT(id) AS count FROM users WHERE email = ?;
+                    """;
+
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, email);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int count = rs.getInt("count");
+
+                return count > 0;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+        return false;
+    }
+
     public UserDetails getUserByEmail(String email) {
         UserDetails user = null;
 
