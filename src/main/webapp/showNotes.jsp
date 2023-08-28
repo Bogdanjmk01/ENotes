@@ -31,7 +31,7 @@
         }
 
         .card[data-radius="none"] {
-            border-radius: 0px;
+            border-radius: 0;
         }
 
         .card {
@@ -57,11 +57,11 @@
             padding: 20px 20px 10px 20px;
         }
 
-        .card[data-color="blue"] .category {
+        .card[data-color="blue"] {
             color: #7a9e9f;
         }
 
-        .card .category, .card .label {
+        .card , .card {
             font-size: 14px;
             margin-bottom: 0px;
         }
@@ -81,13 +81,13 @@
             z-index: 0;
         }
 
-        h4, .h4 {
+        h4 {
             font-size: 1.5em;
             font-weight: 600;
             line-height: 1.2em;
         }
 
-        h6, .h6 {
+        h6 {
             font-size: 0.9em;
             font-weight: 600;
             text-transform: uppercase;
@@ -151,6 +151,28 @@
         session.removeAttribute("errorUpdateMessage");
     } %>
 
+<%
+    String deleteMessageSuccess = (String) session.getAttribute("deleteNoteMessageSuccess");
+    if (deleteMessageSuccess != null) {
+%>
+<div class="d-flex justify-content-center">
+    <div class="alert alert-info mt-1 text-center w-50" role="alert"><%=deleteMessageSuccess%></div>
+</div>
+<%
+        session.removeAttribute("deleteNoteMessageSuccess");
+    } %>
+
+<%
+    String deleteMessageFail = (String) session.getAttribute("deleteNoteMessageFail");
+    if (deleteMessageFail != null) {
+%>
+<div class="d-flex justify-content-center">
+    <div class="alert alert-danger mt-1 text-center w-50" role="alert"><%=deleteMessageFail%></div>
+</div>
+<%
+        session.removeAttribute("deleteNoteMessageFail");
+    } %>
+
 <div class="container bootstrap snippets bootdeys">
     <div class="row">
         <%
@@ -163,6 +185,7 @@
                         <h4 class="title"><a href="edit.jsp?note_id=<%= note.getId()%>"><%= note.getTitle()%></a></h4>
                         <h6 style="color: #ffff"><b>Published Date: </b><%= note.getDate()%></h6>
                         <p class="description"><%=note.getContent() %></p>
+                        <a href="DeleteServlet?note_id=<%= note.getId()%>" class="btn btn-outline-warning btn-lg"><i class="bi bi-trash-fill"></i></a>
                     </div>
                 </div>
             </div>

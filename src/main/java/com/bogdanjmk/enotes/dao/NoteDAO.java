@@ -99,7 +99,7 @@ public class NoteDAO {
     }
 
     public boolean deleteNote(Long id) {
-        boolean f;
+        boolean f = false;
 
         try {
             String query = """
@@ -108,8 +108,11 @@ public class NoteDAO {
 
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setLong(1, id);
-            ps.executeUpdate();
-            f = true;
+            int x = ps.executeUpdate();
+
+            if (x == 1) {
+                f = true;
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
