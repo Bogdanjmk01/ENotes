@@ -24,14 +24,18 @@ public class LoginServlet extends HttpServlet {
         userDetails.setPassword(password);
 
         UserDAO dao = new UserDAO(DBConnection.getConnection());
-        boolean loginUser = dao.loginUser(userDetails);
+        UserDetails loginUser = dao.loginUser(userDetails);
         HttpSession session;
 
-        if (loginUser) {
+        if (loginUser != null) {
+            session = request.getSession();
+            session.setAttribute("userDetails", loginUser);
+
             response.sendRedirect("home.jsp");
         } else {
             session = request.getSession();
             session.setAttribute("failed-message", "Email or password invalid!");
+
             response.sendRedirect("login.jsp");
         }
     }

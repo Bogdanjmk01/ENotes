@@ -37,8 +37,8 @@ public class UserDAO {
         return isUserInserted;
     }
 
-    public boolean loginUser(UserDetails userDetails) {
-        boolean loginUser = false;
+    public UserDetails loginUser(UserDetails userDetails) {
+        UserDetails user = null;
 
         try {
             String query = """
@@ -51,13 +51,16 @@ public class UserDAO {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                loginUser = true;
+                user = new UserDetails();
+                user.setName(rs.getString("name"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return loginUser;
+        return user;
     }
 }
