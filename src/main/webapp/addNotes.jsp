@@ -5,7 +5,7 @@
 
     if (userDetails == null) {
         response.sendRedirect("login.jsp");
-        session.setAttribute("login-error", "Please login first!");
+        session.setAttribute("login-error", "You have to login first to be able to access this page!");
     }
 %>
 <html>
