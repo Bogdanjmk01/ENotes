@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
@@ -22,6 +21,16 @@ public class UserServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
+        UserDAO dao = new UserDAO(DBConnection.getConnection());
+
+        if (dao.doesUserAlreadyExists(email)) {
+            HttpSession session = request.getSession();
+            session.setAttribute("user-already-exists", "User already exists with this email!");
+            response.sendRedirect("register.jsp");
+
+            return;
+        }
+
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
         UserDetails userDetails = new UserDetails();
@@ -29,16 +38,13 @@ public class UserServlet extends HttpServlet {
         userDetails.setEmail(email);
         userDetails.setPassword(hashedPassword);
 
-        UserDAO dao = new UserDAO(DBConnection.getConnection());
         boolean isUserInserted = dao.addUser(userDetails);
-        HttpSession session;
+        HttpSession session = request.getSession();
 
         if (isUserInserted) {
-            session = request.getSession();
             session.setAttribute("reg-success", "User registered successfully!");
             response.sendRedirect("login.jsp");
         } else {
-            session = request.getSession();
             session.setAttribute("failed-message", "Something went wrong on the server side!");
             response.sendRedirect("register.jsp");
         }

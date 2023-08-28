@@ -24,6 +24,16 @@
                                         session.removeAttribute("failed-message");
                                     }
                                 %>
+
+                                <%
+                                    String userAlreadyExists = (String) session.getAttribute("user-already-exists");
+                                    if (userAlreadyExists != null) {
+                                %>
+                                <div class="alert alert-danger w-100" role="alert"><%=userAlreadyExists%></div>
+                                <%
+                                        session.removeAttribute("user-already-exists");
+                                    }
+                                %>
                                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4"><b>Register</b></p>
 
                                 <form class="mx-1 mx-md-4" action="UserServlet" method="post">
