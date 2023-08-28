@@ -32,10 +32,10 @@
             </ul>
             <div class="d-flex gap-2" role="search">
                 <%
-                    UserDetails user = (UserDetails) session.getAttribute("userDetails");
+                    UserDetails userForNavBar = (UserDetails) session.getAttribute("userDetails");
 
-                    if (user != null) { %>
-                        <a href="" class="btn btn-outline-light my-2 my-sm-0" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button"><i class="fa-solid fa-circle-user"></i> <%= user.getName() %></a>
+                    if (userForNavBar != null) { %>
+                        <a href="" class="btn btn-outline-light my-2 my-sm-0" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button"><i class="fa-solid fa-circle-user"></i> <%= userForNavBar.getName() %></a>
                         <a href="LogoutServlet" class="btn btn-outline-light my-2 my-sm-0" type="button"><i class="bi bi-door-closed-fill"></i> Logout</a>
 
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -49,17 +49,17 @@
                                 <div class="container text-center">
                                     <i class="fa fa-user fa-3x"></i>
                                     &nbsp;
-                                    <h5 class="text-dark">Hello, <%= user.getFirstName(user.getName()) %></h5>
+                                    <h5 class="text-dark">Hello, <%= userForNavBar.getFirstName(userForNavBar.getName()) %></h5>
 
                                     <table class="table">
                                         <tbody>
                                         <tr>
                                             <th>Full Name</th>
-                                            <td><%= user.getName() %></td>
+                                            <td><%= userForNavBar.getName() %></td>
                                         </tr>
                                         <tr>
                                             <th>Email</th>
-                                            <td><%= user.getEmail() %></td>
+                                            <td><%= userForNavBar.getEmail() %></td>
                                         </tr>
                                         </tbody>
                                     </table>

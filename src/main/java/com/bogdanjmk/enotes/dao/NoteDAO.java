@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class NoteDAO {
                 f = true;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         return f;
@@ -63,9 +64,82 @@ public class NoteDAO {
                 notes.add(note);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         return notes;
+    }
+
+    public Note getNoteById(Long id) {
+        Note note = null;
+
+        try {
+            String query = """
+                    SELECT * FROM notes WHERE id = ?;
+                    """;
+
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setLong(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                note = new Note();
+                note.setId(rs.getLong("id"));
+                note.setTitle(rs.getString("title"));
+                note.setContent(rs.getString("content"));
+                note.setDate(rs.getTimestamp("date"));
+                note.setUserId(rs.getLong("user_id"));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return note;
+    }
+
+    public boolean deleteNote(Long id) {
+        boolean f;
+
+        try {
+            String query = """
+                    DELETE FROM notes WHERE id = ?;
+                    """;
+
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setLong(1, id);
+            ps.executeUpdate();
+            f = true;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return f;
+    }
+
+    public boolean editNote(Long id, String title, String content) {
+        boolean f = false;
+
+        try {
+            String query = """
+                    UPDATE notes SET title = ?, content = ? WHERE id = ?;
+                    """;
+
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, title);
+            ps.setString(2, content);
+            ps.setLong(3, id);
+            int i = ps.executeUpdate();
+
+            if (i == 1) {
+                f = true;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return f;
     }
 }
