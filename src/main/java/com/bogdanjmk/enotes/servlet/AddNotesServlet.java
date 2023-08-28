@@ -22,6 +22,7 @@ public class AddNotesServlet extends HttpServlet {
 
         if (f) {
             System.out.println("Merge insertul catre baze de date in tabela notes!");
+            response.sendRedirect("showNotes.jsp");
         } else {
             System.out.println("Nu merge insertul!");
         }

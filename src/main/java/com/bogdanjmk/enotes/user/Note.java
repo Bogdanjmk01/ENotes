@@ -8,6 +8,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 public class Note {
+    private Long id;
     private String title;
     private String content;
     private Date date;
