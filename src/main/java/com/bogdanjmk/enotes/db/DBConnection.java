@@ -11,7 +11,7 @@ public class DBConnection {
         try {
             if (connection == null) {
                 Class.forName("com.mysql.jdbc.Driver");
-                connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/enotes", "root", "WarnerCross2023#");
+                connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/enotes", "your username", "your password");
             }
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
